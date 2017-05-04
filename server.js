@@ -20,11 +20,11 @@ const state = crypto.randomBytes(16).toString('hex')
 
 // passport setup
 passport.use(new OAuth2Strategy({
-    authorizationURL: 'http://localhost:3001/dialog/authorize', //
-    tokenURL: 'http://localhost:3001/oauth/token', //
-    clientID: 'abc123',
-    clientSecret: 'ssh-secret',
-    callbackURL: "http://localhost:3000"
+    authorizationURL: process.env.authorizationURL || 'http://localhost:3001/dialog/authorize', //
+    tokenURL: process.env.tokenURL || 'http://localhost:3001/oauth/token', //
+    clientID: process.env.clientID || 'abc123',
+    clientSecret: process.env.clientSecret || 'ssh-secret',
+    callbackURL: process.env.callbackURL || "http://localhost:3000"
         /*
             authorizationURL: 'https://staging-auth.wallstreetdocs.com/oauth/authorize', //'http://localhost:3001/dialog/authorize', //
             tokenURL: 'https://staging-auth.wallstreetdocs.com/oauth/token', // 'http://localhost:3001/oauth/token', //
@@ -96,7 +96,7 @@ app.get('/', passport.authenticate('oauth2', {
     if (false) { next(); }
     var request = require('request'),
         options = {
-            url: 'http://localhost:3001/api/userinfo',
+            url: process.env.userinfoURL || 'http://localhost:3001/api/userinfo',
             headers: {
                 'Authorization': 'Bearer ' + req.user.access_token
             }
